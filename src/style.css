@@ -1,24 +1,193 @@
-body {
-  font-family: "Roboto", sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;700&display=swap');
+
+:root {
+  --pink:       #ff2d78;
+  --cyan:       #00f0ff;
+  --yellow:     #ffe141;
+  --dark:       #0a0a0f;
+  --dark2:      #11111a;
+  --panel:      #16161f;
+  --border:     #2a2a3a;
+  --text:       #f0e6d3;
 }
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+body {
+  min-height: 100vh;
+  background-color: var(--dark);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,45,120,0.03) 2px,
+      rgba(255,45,120,0.03) 4px
+    ),
+    radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(255,45,120,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,240,255,0.08)  0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  overflow: hidden;
+}
+
+
 div.pageContent {
-  margin-top: 5em;
-  height: 100%;
+  position: relative;
+  width: 600px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--pink);
+  padding: 0 0 32px;
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(255,45,120,0.15),
+    0 0 40px rgba(255,45,120,0.2),
+    0 0 80px rgba(0,240,255,0.08),
+    0 24px 60px rgba(0,0,0,0.8);
+  animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+div.pageContent::before {
+  content: 'WANTED ★★★★★';
+  display: block;
+  background: var(--pink);
+  color: var(--dark);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  padding: 6px 0;
   text-align: center;
 }
 
+div.pageContent::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--dark);
+  clip-path: polygon(100% 0, 0 100%, 100% 100%);
+}
+
+h2#name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 3px;
+  color: var(--yellow);
+  text-shadow:
+    0 0 12px rgba(255,225,65,0.5),
+    3px 3px 0 rgba(0,0,0,0.6);
+  padding: 20px 20px 4px;
+  line-height: 1;
+  animation: slideUp 0.5s 0.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 img.img_sprite_front_default {
-  width: 96px;
-  height: 96px;
-  margin-block: 1em;
+  display: block;
+  width: 140px;
+  height: 140px;
+  margin: 16px auto;
+  image-rendering: pixelated;
+  filter:
+    drop-shadow(0 0 12px var(--cyan))
+    drop-shadow(0 0 28px rgba(0,240,255,0.4));
+  transition: filter 0.3s ease, transform 0.3s ease;
+  animation: slideUp 0.5s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+}
+
+img.img_sprite_front_default:hover {
+  filter:
+    drop-shadow(0 0 18px var(--pink))
+    drop-shadow(0 0 36px rgba(255,45,120,0.5));
+  transform: scale(1.08);
+}
+
+div.pageContent > div {
+  margin-top: 4px;
+  padding: 0 24px;
+  display: flex;
+  gap: 12px;
+  position: relative;
+}
+
+div.pageContent > div::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--pink), var(--cyan), transparent);
 }
 
 button#previous,
 button#next {
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  display: inline-block;
+  flex: 1;
+  font-family: 'Bebas Neue', sans-serif;
   font-size: 18px;
+  letter-spacing: 2px;
+  border: none;
+  padding: 14px 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.2s, box-shadow 0.2s;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+button#previous {
+  background: var(--pink);
+  color: var(--dark);
+  box-shadow: 0 0 16px rgba(255,45,120,0.5);
+}
+
+button#next {
+  background: var(--cyan);
+  color: var(--dark);
+  box-shadow: 0 0 16px rgba(0,240,255,0.5);
+}
+
+button#previous::before,
+button#next::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%;
+  height: 100%;
+  background: rgba(255,255,255,0.25);
+  transform: skewX(-20deg);
+  transition: left 0.4s ease;
+}
+
+button#previous:hover::before,
+button#next:hover::before {
+  left: 130%;
+}
+
+button#previous:hover {
+  box-shadow: 0 0 28px rgba(255,45,120,0.8);
+  color: #fff;
+}
+
+button#next:hover {
+  box-shadow: 0 0 28px rgba(0,240,255,0.8);
+  color: #000;
+}
+
+button#previous:active,
+button#next:active {
+  transform: scale(0.96);
 }
